@@ -1,22 +1,19 @@
 export default function createGames(app, connection) {
+
   app.post("/games", async (req, res) => {
-    const { name } = req.body;
-    console.log(name);
+    const { name, image, stockTotal, categoryId, pricePerDay } = req.body;
 
     try {
-      const nameList = await connection.query(
-        "select * from categories where name = $1",
-        [name]
-      );
+      const category = await connection.query("select * from categories where id = $1", [categoryId]);
+      const gameName = await connection.query("select * from games where name = $1", [name]);
 
-      if (name.length === 0) {
+      if (category.rows.length === 0 || name.length === 0 || stockTotal <= 0 || pricePerDay <= 0) {
         return res.sendStatus(400);
-      } else if (nameList.rows[0]) {
-        return res.sendStatus(409);
-      } else {
-        await connection.query("insert into categories (name) values ($1)", [
-          name,
-        ]);
+      } else if(gameName.rows[0]){
+          return res.sendStatus(409);
+      }else{
+        const sql = 'insert into games (name, image, "stockTotal", "categoryId", "pricePerDay") values ($1, $2, $3, $4, $5)';
+        await connection.query(sql, [name, image, stockTotal,categoryId, pricePerDay]);
         res.sendStatus(201);
       }
     } catch (error) {
