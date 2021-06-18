@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 
-export default function createRents(app, connection) {
-
-    
+export default function createRents(app, connection) {    
 
     app.post("/rentals", async (req, res) => {
       const { customerId, gameId, daysRented } = req.body;
