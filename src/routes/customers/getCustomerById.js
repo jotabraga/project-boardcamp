@@ -1,16 +1,16 @@
 export default function readCategories(app, connection) {
 
-    app.get("/customers/:id", async (req, res) => {
-
-      const { id } = req.params;
+  app.get("/customers/:id", async (req, res) => {
     
-      try {
-        const sql = 'select * from customers where id = $1';
-        const customersList = await connection.query(sql, [id]);
-        res.send(customersList.rows);  
-      } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-      }
-    });
-  }
+    const { id } = req.params;
+
+    try {
+      const sql = "select * from customers where id = $1";
+      const customersList = await connection.query(sql, [id]);
+      res.send(customersList.rows);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+}
