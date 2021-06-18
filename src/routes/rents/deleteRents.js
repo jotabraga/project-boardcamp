@@ -7,9 +7,10 @@ export default function deleteRents(app, connection) {
               
       try {
         const rental = await connection.query('select * from rentals where id = $1', [id]);
+        console.log(rental);
       
           
-        if (!rental.rows[0]) {
+        if (rental.rows.length === 0) {
           return res.sendStatus(404);
         } else if (rental.rows[0].returnDate !== null) {
           return res.sendStatus(400);
