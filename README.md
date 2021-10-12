@@ -28,8 +28,8 @@ npm i
 ```bash
 psql YOUR_DATABASE_NAME < dump.sql
 ```
-6. You can run the app by
+4. You can run the app by
 ```bash
 npm start
 ```
-7. Finally access the front-end on your favorite browser 
+5. Finally access the front-end on your favorite browser 
